@@ -11,7 +11,7 @@ inputPath = "./"
 parser = argparse.ArgumentParser()
 parser.add_argument("--vcf",type=str,default=None) #eg. "python3 calculatePRS.py --vcf HWGS10060"
 args = parser.parse_args()
-fileName = args.vcf #eg. "HWGS10060"
+fileName = args.vcf.replace("\r","") #eg. "HWGS10060"
 
 VCF = open(inputPath+fileName+".vcf", 'r+') # read vcf file
 print(fileName)
