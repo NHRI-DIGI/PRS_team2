@@ -33,13 +33,13 @@ with open(fileName+"_"+refName+"_PRS.txt",'w+') as f:
                 CHROM = eval(info[0][3:]) # make "chr.1" to "1"
             else:
                 continue
-            POS   = int(info[1])  # get POS
-            REF   = info[3]       # get REF
-            ALT   = info[4]       # get ALT
-            WGS   = info[-1][0:3] # get WGS eg."0/1" or "1/1"
+            POS   = int(info[1])        # get POS
+            REF   = info[3]             # get REF
+            ALT   = info[4].split(',')  # get ALT
+            WGS   = info[-1][0:3]       # get WGS eg."0/1" or "1/1"
             filter = (df["hm_chr"]==CHROM)              #filter will let vcf only find it's chromosome number in reference.
             for index ,row in df[filter].iterrows():    #eg. if chr=1 in vcf , it will only find chr=1 in reference,nor other chr.
-                if row["hm_pos"]==POS and row["effect_allele"] ==REF and row["other_allele"] ==ALT:# check whether position、allele are the same
+                if row["hm_pos"]==POS and row["effect_allele"] ==REF and row["other_allele"] in ALT:# check whether position、allele are the same
                     for i in df.loc[index].tolist(): # write .txt
                         g.write(str(i)+"\t") 
                     g.write("\n")
